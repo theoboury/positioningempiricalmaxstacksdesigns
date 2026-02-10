@@ -1,3 +1,6 @@
+# positioningempiricalmaxstacksdesigns
+# Copyright (C) 2026 THEO BOURY 
+
 from checkSeparability import fullSeparable, dbn_to_tree, filter, ssparse, first_modulo_separable
 from FoldingTurner import fold_turner
 from foldingBPandStacking import main_unitary, delta_main_stacking2 #Warning delta_main_unitary is bugged for now

@@ -1,5 +1,5 @@
-# LinearBPDesign
-# Copyright (C) 2024 THEO BOURY 
+# positioningempiricalmaxstacksdesigns
+# Copyright (C) 2026 THEO BOURY 
 
 #This file contains the function to launch folding algorithms. 
 # #The energy model supported is unitary. Weighted can be added by modifying the "Energy" function.

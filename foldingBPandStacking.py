@@ -1,3 +1,6 @@
+# positioningempiricalmaxstacksdesigns
+# Copyright (C) 2026 THEO BOURY 
+
 #This file contains the function to launch folding algorithms. 
 # #The energy models supported are unitary or stacking. Weighted can be added by modifying "Energy" function.
 #Considered BPs can be G-U/U-G or not.

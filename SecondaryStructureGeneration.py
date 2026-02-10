@@ -1,3 +1,6 @@
+# positioningempiricalmaxstacksdesigns
+# Copyright (C) 2026 THEO BOURY 
+
 import random 
 UNPAIRED_WEIGHT = 1
 
