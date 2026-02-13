@@ -3,12 +3,12 @@
 
 from checkSeparability import fullSeparable, dbn_to_tree, filter, ssparse, first_modulo_separable
 from FoldingTurner import fold_turner
-from foldingBPandStacking import main_unitary, delta_main_stacking2 #Warning delta_main_unitary is bugged for now
+from foldingStacking import delta_main_stacking2 
 from foldingBP import main_unitary_only_one
 from SecondaryStructureGeneration import ssrandom #ssrandom(n,count,count_stacked,theta,min_helix)
 from RandomCompatible import choose_random_seq
 import csv
-import random
+
 
 
 
@@ -77,13 +77,11 @@ def create_stats_from_Stacking_A_only_nom3o_nom5(n, iteration,theta,min_helix, r
                 Slist0struct = pairstoss(n, Slist[0])
             resu.append(ss)
             resu.append(seq)
-            #print("seq", seq, "\n")
             Separable = "False"
             if fullSeparable(seq, ss):
                 Separable = "True"
             resu.append(Separable)
             BPstruct0, nb  = main_unitary_only_one(seq, model="Unitary", BPconsidered="Nussinov")
-            #print(nb)
             BPDesign= "False"
             BPstruct = pairstoss(n, BPstruct0)
             if nb == 1 and BPstruct == ss:
@@ -156,12 +154,9 @@ def create_stats_from_Separable_A_only_nom3o_nom5(n, iteration,theta,min_helix, 
                 ss = ssrandom(n,count,count_stacked,theta,min_helix)
                 t = dbn_to_tree(ssparse(ss))
             print("iteration", i, " ss", ss)
-            #ss_useful = sstopairs(ssparse(ss))
-            #print("ss", ss_useful)
             seq = None
             while seq is None:
                 seq = first_modulo_separable(t, modulolimit=2)
-            #seq = choose_random_seq(t, withA=True)
             resu.append(ss)
             resu.append(seq)
             Slist  = delta_main_stacking2(seq, model="Unitary", BPconsidered="Nussinov", delta = 0, debug = 0, output_format = None, name_file = "", show=False)
@@ -331,7 +326,6 @@ def stacking_vs_BP_A_only_nom3o_nom5(n, iteration,theta,min_helix, restart=1,las
             BPDesign= False
             StackingDesign= False
             while (not BPDesign) or (not StackingDesign):
-                #(len(Slist) != 1) or  (Slist0struct != ss)
                 seq = choose_random_seq(t, withA=True)
                 if not StackingDesign:
                     Slist  = delta_main_stacking2(seq, model="Unitary", BPconsidered="Nussinov", delta = 0, debug = 0, output_format = None, name_file = "", show=False)
@@ -340,16 +334,13 @@ def stacking_vs_BP_A_only_nom3o_nom5(n, iteration,theta,min_helix, restart=1,las
                         StackingDesign = True
                         Stacking_seq = seq
                         it_stack=timeout
-                        #print("it_stack", it_stack, "\n")
                 if not BPDesign:
-                    #BPstruct  = main_unitary(seq, model="Unitary", BPconsidered="Nussinov", debug = 0, output_format = None, name_file = "", show=False)
                     BPstruct, nb  = main_unitary_only_one(seq, model="Unitary", BPconsidered="Nussinov")
                     BPstruct = pairstoss(n, BPstruct)
                     if nb == 1 and BPstruct == ss:
                         BPDesign = True
                         BP_seq = seq
                         it_BP=timeout
-                        #print("it_BP", it_BP, "\n")
                 if timeout >= 10000:
                     print("nb", nb)
                     print("BPDesign", BPDesign,  "StackingDesign", StackingDesign)
@@ -406,40 +397,7 @@ def stacking_vs_BP_read_stats_from_csv(name):
     "isnotBP_TurnerDesignnotStacking_TurnerDesign:", isnotBP_TurnerDesignnotStacking_TurnerDesign, "\n",
     "In mean, nb of additional iteration necessary to get a design in BP (not taking restart into account)", res_it/num)
 
-"""Examples of code usages:
-To begin:
-create_stats_from_Stacking_A_only_nom3o_nom5(n=150, iteration=2000,theta=3,min_helix=3, restart=1,last_index=-1)
-To restart:
-create_stats_from_Stacking_A_only_nom3o_nom5(n=150, iteration=2000,theta=3,min_helix=3, restart=0,last_index=lastcomputed)
-To see proportions:
-from_stacking_read_stats_from_csv('ResultsfromStacking.csv')
 
-To begin:
-create_stats_from_Separable_A_only_nom3o_nom5(n=150, iteration=2000,theta=3,min_helix=3, restart=1,last_index=-1)
-To restart:
-create_stats_from_Separable_A_only_nom3o_nom5(n=150, iteration=2000,theta=3,min_helix=3, restart=0,last_index=lastcomputed)
-To see proportions:
-from_separable_read_stats_from_csv('ResultsfromSeparable.csv')
-
-To begin:
-create_stats_from_Stacking_A_only_withm3o_withm5(n=150, iteration=2000,theta=3,min_helix=3, restart=1,last_index=-1)
-To restart:
-create_stats_from_Stacking_A_only_withm3o_withm5(n=150, iteration=2000,theta=3,min_helix=3, restart=0,last_index=lastcomputed)
-To see proportions:
-from_stacking_withm3om5_read_stats_from_csv('ResultsfromStackingwithm3oandm5.csv')
-
-To begin:
-refine_stats_from_Stacking_A_only_withm3o_withm5()
-To see proportions:
-from_stacking_withm3om5increased_read_stats_from_csv('ResultsfromStackingwithm3oandm5increased.csv')
-
-To begin:
-stacking_vs_BP_A_only_nom3o_nom5(n=50, iteration=2000,theta=3,min_helix=3, restart=1,last_index=-1)
-To restart:
-stacking_vs_BP_A_only_nom3o_nom5(n=50, iteration=2000,theta=3,min_helix=3, restart=0,last_index=lastcomputed)
-To see proportions:
-stacking_vs_BP_read_stats_from_csv('ResultsStackingvsBP.csv')
-"""
 
 
 

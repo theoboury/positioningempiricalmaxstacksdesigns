@@ -348,12 +348,6 @@ def part(i):
         return li + [elem+[i] for elem in li]
 
 
-    
-
-
-
-
-
 
 def first_modulo_separable(t, modulolimit=4):
     for m in range(2, modulolimit + 1):

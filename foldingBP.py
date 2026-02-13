@@ -163,18 +163,4 @@ def main_unitary_only_one(seq, model="Unitary", BPconsidered="Nussinov"):
     M, nb = FillMatUnitary(seq, model=model, BPconsidered=BPconsidered)
     S = OptimalBackTrackUnitary(0, len(seq) - 1, M, seq, model=model, BPconsidered=BPconsidered)
     return S, nb
-    #Slist = DeltaBackTrackUnitary([(0, len(seq) - 1)], [], delta, M, seq, model=model, BPconsidered=BPconsidered)
-    #return Slist
-    n = len(seq)
-    list_resu = []
-    for S in Slist:
-        resu = ["." for i in range(n)]
-        for (i,j) in S:
-            if not isValid(seq, i , j, BPconsidered=BPconsidered):
-                return None
-            resu[i] = "("
-            resu[j] = ")"
-        resu= "".join(resu)
-        if resu != "."*n:
-            list_resu.append(resu)
-    return list_resu
+
