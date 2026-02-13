@@ -26,9 +26,9 @@ The different files are:
 
 ### Launch
 
-All experiments can be launched with the following command: 
+All experiments can be launched with variations of the following command: 
 ```bash
-python3 MaxStacksPositioning -n 150 -o FromStackingNoLargeLoop
+python3 MaxStacksPositioning.py -n 150 -o FromStackingNoLargeLoop
 ```
 With
 - n, the size of sequences to sample
